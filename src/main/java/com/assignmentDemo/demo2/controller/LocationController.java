@@ -1,6 +1,5 @@
 package com.assignmentDemo.demo2.controller;
 
-import com.assignmentDemo.demo2.dao.LocationRepo;
 import com.assignmentDemo.demo2.model.Location;
 import com.assignmentDemo.demo2.service.LocationService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/travel")
 
-public class TravelController {
+public class LocationController {
     @Autowired
     LocationService locationService;
     @PostMapping("/addLocation")
@@ -40,9 +39,13 @@ public class TravelController {
     public Location updateLocation(@RequestBody Location location){
         return locationService.updateLocation(location);
     }
-    @DeleteMapping
-    public String deleteLocation (@RequestBody Location location){
-        return locationService.deleteLocation(location);
+    @DeleteMapping("/location/delete/{locationKey}")
+    public String deleteLocation (@PathVariable int locationKey){
+        return locationService.deleteLocation(locationKey);
+    }
+    @DeleteMapping("/location/deleteAll")
+    public String deleteAllLocations(){
+        return locationService.deleteAllLocations();
     }
 
 
