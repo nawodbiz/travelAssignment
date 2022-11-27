@@ -20,15 +20,13 @@ public class AllocationService {
 //
 //    }
 
-    public List<Allocation> getFreeRooms(int roomsId) {
-        Rooms rooms = new Rooms();
-        rooms.setRoomsId(roomsId);
-        return allocationRepo.findByRooms(rooms);
-    }
-    public List<Allocation> getFreeRooms(int roomsId, Date startDate, Date endDate) {
-        Rooms rooms = new Rooms();
-        rooms.setRoomsId(roomsId);
-        return allocationRepo.findByRooms(rooms);
+//    public List<Allocation> getFreeRooms(int roomsId) {
+//        Rooms rooms = new Rooms();
+//        rooms.setRoomsId(roomsId);
+//        return allocationRepo.findByRooms(rooms);
+//    }
+    public List<Integer> getFreeRooms(int roomsId, Date firstDate, Date endDate) {
+        return allocationRepo.findByAllocatedCount(firstDate,endDate,roomsId);
     }
 
 }
