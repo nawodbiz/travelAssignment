@@ -16,7 +16,7 @@ public class Allocation {
     @Column(name = "end_date")
     private Date endDate;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "rooms", referencedColumnName = "rooms_id")
+    @JoinColumn(name = "rooms_id")
     private Rooms rooms;
 
     public Allocation() {

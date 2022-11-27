@@ -2,7 +2,8 @@ package com.assignmentDemo.demo2.model;
 
 import javax.persistence.*;
 
-@Entity(name = "room_type")
+@Entity
+@Table(name = "room_type")
 public class RoomType {
     @Id
     @Column(name = "room_type_id")

@@ -11,10 +11,10 @@ public class Rooms {
     @Column(name = "room_count")
     private int roomCount;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "hotel_id",referencedColumnName = "hotel_id")
+    @JoinColumn(name = "hotel_id")
     private Hotel hotel;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "room_type_id",referencedColumnName = "room_type_id")
+    @JoinColumn(name = "room_type_id")
     private RoomType roomType;
 
     public Rooms() {

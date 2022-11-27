@@ -15,7 +15,7 @@ public class Rate {
     @Column (name = "end_date")
     private Date endDate;
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "room_id",referencedColumnName = "rooms_id")
+    @JoinColumn(name = "room_id")
     private Rooms rooms;
 
     public Rate() {

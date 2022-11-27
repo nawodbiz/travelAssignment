@@ -5,25 +5,25 @@ import com.assignmentDemo.demo2.model.Rooms;
 import java.util.List;
 
 public class SearchResult {
-    private String hotel;
+    private String hotelName;
     private int rate;
     private List<Rooms> roomsList;
 
     public SearchResult() {
     }
 
-    public SearchResult(String hotel, int rate, List<Rooms> roomsList) {
-        this.hotel = hotel;
+    public SearchResult(String hotelName, int rate, List<Rooms> roomsList) {
+        this.hotelName = hotelName;
         this.rate = rate;
         this.roomsList = roomsList;
     }
 
-    public String getHotel() {
-        return hotel;
+    public String getHotelName() {
+        return hotelName;
     }
 
-    public void setHotel(String hotel) {
-        this.hotel = hotel;
+    public void setHotelName(String hotelName) {
+        this.hotelName = hotelName;
     }
 
     public int getRate() {
