@@ -25,5 +25,10 @@ public class AllocationService {
         rooms.setRoomsId(roomsId);
         return allocationRepo.findByRooms(rooms);
     }
+    public List<Allocation> getFreeRooms(int roomsId, Date startDate, Date endDate) {
+        Rooms rooms = new Rooms();
+        rooms.setRoomsId(roomsId);
+        return allocationRepo.findByRooms(rooms);
+    }
 
 }

@@ -19,17 +19,19 @@ public class AllocationController {
 //        return allocationService.isAvailableForOneDay(date);
 //
 //    }
-    @GetMapping("/availableRooms/{roomsId}")
-    public List<Allocation> getFreeRooms(@PathVariable int roomsId) {
-        return allocationService.getFreeRooms(roomsId);
 
-    }
-
-//    @GetMapping("/availableRooms)
-//    public List<Allocation> getFreeRooms(@RequestParam(value = "roomsId") int roomsId, ) {
+//    @GetMapping("/availableRooms/{roomsId}")
+//    public List<Allocation> getFreeRooms(@PathVariable int roomsId) {
 //        return allocationService.getFreeRooms(roomsId);
 //
 //    }
+
+    @GetMapping("/availableRooms")
+    public List<Allocation> getFreeRooms(@RequestParam(value = "roomsId") int roomId, @RequestParam(value = "sDate") Date sytartDate,
+                                         @RequestParam(value = "eDate") Date endDate){
+        return allocationService.getFreeRooms(roomId, sytartDate, endDate);
+
+    }
 
 
 
