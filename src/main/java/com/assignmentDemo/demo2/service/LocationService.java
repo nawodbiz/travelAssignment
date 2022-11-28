@@ -1,6 +1,6 @@
 package com.assignmentDemo.demo2.service;
 
-import com.assignmentDemo.demo2.dao.LocationRepo;
+import com.assignmentDemo.demo2.repository.LocationRepo;
 import com.assignmentDemo.demo2.model.Location;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

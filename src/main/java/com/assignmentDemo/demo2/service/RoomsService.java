@@ -1,14 +1,17 @@
 package com.assignmentDemo.demo2.service;
 
-import com.assignmentDemo.demo2.dao.HotelRepo;
-import com.assignmentDemo.demo2.dao.RoomTypeRepo;
-import com.assignmentDemo.demo2.dao.RoomsRepo;
+import com.assignmentDemo.demo2.repository.AllocationRepo;
+import com.assignmentDemo.demo2.repository.HotelRepo;
+import com.assignmentDemo.demo2.repository.RoomTypeRepo;
+import com.assignmentDemo.demo2.repository.RoomsRepo;
 import com.assignmentDemo.demo2.model.Hotel;
 import com.assignmentDemo.demo2.model.Rooms;
 import com.assignmentDemo.demo2.pojo.AddRooms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -19,11 +22,14 @@ public class RoomsService {
     HotelRepo hotelRepo;
     @Autowired
     RoomTypeRepo roomTypeRepo;
+    @Autowired
+    AllocationRepo allocationRepo;
+    public int remainingRoomsCOunt;
     public Rooms addRooms(AddRooms addRooms) {
 
         Rooms rooms = new Rooms();
         rooms.setRoomsId(addRooms.getRoomsId());
-        rooms.setRoomCount(addRooms.getRoomCount());
+        rooms.setRoomsCount(addRooms.getRoomCount());
         rooms.setHotel(hotelRepo.findById(addRooms.getHotelId()).get());
         rooms.setRoomType(roomTypeRepo.findById(addRooms.getRoomTypeId()).get());
         return roomsRepo.save(rooms);
@@ -44,5 +50,46 @@ public class RoomsService {
         hotel.setHotelId(hotelId);
         return roomsRepo.findByHotel(hotel);
     }
+    public int getAvailableRoomsCount(int roomsId, Date firstDate, Date endDate){
+        int initialRoomsCount = roomsRepo.findById(roomsId).get().getRoomsCount();
+        int allocatedRoomsCount =0;
+        for(int i: allocationRepo.findByAllocatedCount(firstDate,endDate,roomsId)){
+            allocatedRoomsCount+=i;
+        }
 
-}
+        return remainingRoomsCOunt = initialRoomsCount-allocatedRoomsCount;
+    }
+    public List<Rooms> availableRoomsForHotel(Hotel hotel){
+        return roomsRepo.findByHotel(hotel);
+    }
+    public List<Rooms> availableRooms(Hotel hotel, Date firstDate, Date endDate) {
+        List<Rooms> availableRoomsList = new ArrayList<>();
+        List<Rooms> availableRoomsForHotel = availableRoomsForHotel(hotel);
+        for (Rooms rooms : availableRoomsForHotel) {
+            if (getAvailableRoomsCount(rooms.getRoomsId(), firstDate, endDate) > 0) {
+                rooms.setRoomsCount(remainingRoomsCOunt);
+                availableRoomsList.add(rooms);
+            }
+        }
+        return availableRoomsList;
+    }
+
+
+
+//    public List<Rooms> getAvailableRoomsForLocation(List<Hotel> hotelListForLocation, Date firstDate, Date endDate){
+//
+//        List<Rooms> availableRooms = new ArrayList<>();
+//        int id;
+//
+//        for(Rooms room: availableRoomsForHotel(hotelId)){
+//            id = availableRooms(room.getRoomsId(),firstDate,endDate);
+//            getRoomsById(id);
+//        }
+//        return availableRooms;
+//        for(Hotel hotel: hotelListForLocation){
+//
+//        }
+
+
+
+    }

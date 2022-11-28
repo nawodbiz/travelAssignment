@@ -1,8 +1,6 @@
 package com.assignmentDemo.demo2.service;
 
-import com.assignmentDemo.demo2.dao.AllocationRepo;
-import com.assignmentDemo.demo2.model.Allocation;
-import com.assignmentDemo.demo2.model.Rooms;
+import com.assignmentDemo.demo2.repository.AllocationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

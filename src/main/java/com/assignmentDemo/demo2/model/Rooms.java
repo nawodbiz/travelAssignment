@@ -9,7 +9,7 @@ public class Rooms {
     @Column(name = "rooms_id")
     private int roomsId;
     @Column(name = "room_count")
-    private int roomCount;
+    private int roomsCount;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "hotel_id")
     private Hotel hotel;
@@ -20,9 +20,9 @@ public class Rooms {
     public Rooms() {
     }
 
-    public Rooms(int roomsId, int roomCount, Hotel hotel, RoomType roomType) {
+    public Rooms(int roomsId, int roomsCount, Hotel hotel, RoomType roomType) {
         this.roomsId = roomsId;
-        this.roomCount = roomCount;
+        this.roomsCount = roomsCount;
         this.hotel = hotel;
         this.roomType = roomType;
     }
@@ -35,12 +35,12 @@ public class Rooms {
         this.roomsId = roomsId;
     }
 
-    public int getRoomCount() {
-        return roomCount;
+    public int getRoomsCount() {
+        return roomsCount;
     }
 
-    public void setRoomCount(int roomCount) {
-        this.roomCount = roomCount;
+    public void setRoomsCount(int roomsCount) {
+        this.roomsCount = roomsCount;
     }
 
     public Hotel getHotel() {

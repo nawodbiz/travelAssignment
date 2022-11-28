@@ -26,12 +26,12 @@ public class AllocationController {
 //
 //    }
 
-    @GetMapping("/availableRooms")
-    public List<Integer> getFreeRooms(@RequestParam(value = "roomsId") int roomId, @RequestParam(value = "sDate") Date startDate,
-                                         @RequestParam(value = "eDate") Date endDate){
-        return allocationService.getFreeRooms(roomId,startDate,endDate);
-
-    }
+//    @GetMapping("/availableRooms")
+//    public List<Integer> getFreeRooms(@RequestParam(value = "roomsId") int roomId, @RequestParam(value = "sDate") Date startDate,
+//                                         @RequestParam(value = "eDate") Date endDate){
+//        return allocationService.getFreeRooms(roomId,startDate,endDate);
+//
+//    }
 
 
 

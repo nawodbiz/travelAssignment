@@ -1,4 +1,4 @@
-package com.assignmentDemo.demo2.dao;
+package com.assignmentDemo.demo2.repository;
 
 import com.assignmentDemo.demo2.model.Rate;
 import org.springframework.data.jpa.repository.JpaRepository;

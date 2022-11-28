@@ -1,5 +1,4 @@
 package com.assignmentDemo.demo2.controller;
-import com.assignmentDemo.demo2.dto.HotelDTO;
 import com.assignmentDemo.demo2.model.Hotel;
 import com.assignmentDemo.demo2.pojo.AddHotel;
 import com.assignmentDemo.demo2.service.HotelService;

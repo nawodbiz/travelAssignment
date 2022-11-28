@@ -32,6 +32,10 @@ public class Location {
     public Location() {
     }
 
+    public Location(int locationId) {
+        this.locationId = locationId;
+    }
+
     public Location(int locationId, String locationName, String locationCode, int postalCode) {
         this.locationId = locationId;
         this.locationName = locationName;

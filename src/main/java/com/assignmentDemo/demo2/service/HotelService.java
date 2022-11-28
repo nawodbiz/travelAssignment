@@ -1,9 +1,10 @@
 package com.assignmentDemo.demo2.service;
 
-import com.assignmentDemo.demo2.dao.HotelRepo;
+import com.assignmentDemo.demo2.repository.HotelRepo;
 import com.assignmentDemo.demo2.model.Hotel;
 import com.assignmentDemo.demo2.model.Location;
 import com.assignmentDemo.demo2.pojo.AddHotel;
+import com.assignmentDemo.demo2.repository.LocationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,13 @@ public class HotelService {
     @Autowired
     HotelRepo hotelRepo;
     @Autowired
-    LocationService locationService;
+    LocationRepo locationRepo;
+
+
+
 
     public Hotel addHotel(AddHotel addHotel){
-        Location location = locationService.findLocationById(addHotel.getLocationId()).get();
+        Location location = locationRepo.findById(addHotel.getLocationId()).get();
         Hotel hotel = new Hotel();
         hotel.setHotelId(addHotel.getHotelKey());
         hotel.setHotelName(addHotel.getHotelName());
@@ -34,5 +38,9 @@ public class HotelService {
         Location location = new Location();
         location.setLocationId(locationId);
         return hotelRepo.findByLocation(location);
+    }
+    public List<Hotel> getHotelsByLocationCode(String locationCode){
+        int locationId = locationRepo.findByLocationCode(locationCode).getLocationId();
+        return hotelRepo.findByLocation(new Location(locationId));
     }
 }

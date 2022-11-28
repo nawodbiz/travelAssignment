@@ -21,6 +21,10 @@ public class Hotel {
     public Hotel() {
     }
 
+    public Hotel(int hotelId) {
+        this.hotelId = hotelId;
+    }
+
     public Hotel(int hotelId, String hotelName, String contactNumber, String address, Location location) {
         this.hotelId = hotelId;
         this.hotelName = hotelName;
