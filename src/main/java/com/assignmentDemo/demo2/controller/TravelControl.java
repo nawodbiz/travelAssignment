@@ -1,5 +1,6 @@
 package com.assignmentDemo.demo2.controller;
 
+import com.assignmentDemo.demo2.model.SearchResponse;
 import com.assignmentDemo.demo2.pojo.searchResult;
 import com.assignmentDemo.demo2.service.TravelService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +18,15 @@ public class TravelControl {
     @Autowired
     TravelService travelService;
     @GetMapping(value = "/sendRequest")
-    public List<searchResult> getResponse(@RequestParam(value = "locationCode") String locationCode,
-                                          @RequestParam(value = "adultCount") int adultCount,
-                                          @RequestParam(value = "childCount") int childCount,
-                                          @RequestParam(value = "startDate") Timestamp startDate,
-                                          @RequestParam(value = "endDate") Timestamp endDate){
-        return travelService.sendRequest(locationCode,adultCount,childCount,startDate,endDate);
+    public SearchResponse getResponse(@RequestParam(value = "locationCode") String locationCode,
+                                      @RequestParam(value = "adultCount") int adultCount,
+                                      @RequestParam(value = "childCount") int childCount,
+                                      @RequestParam(value = "startDate") Timestamp startDate,
+                                      @RequestParam(value = "endDate") Timestamp endDate){
+        SearchResponse searchResponse = new SearchResponse();
+        searchResponse.setStatus("SUCCESS");
+        searchResponse.setData(travelService.sendRequest(locationCode,adultCount,childCount,startDate,endDate));
+        return searchResponse;
     }
 
 //    @PostMapping("/sample")
