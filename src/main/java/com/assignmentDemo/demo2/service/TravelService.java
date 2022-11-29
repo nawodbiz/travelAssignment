@@ -2,10 +2,12 @@ package com.assignmentDemo.demo2.service;
 
 import com.assignmentDemo.demo2.model.Hotel;
 import com.assignmentDemo.demo2.model.Rooms;
-import com.assignmentDemo.demo2.pojo.Response;
+import com.assignmentDemo.demo2.pojo.searchResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -20,16 +22,34 @@ public class TravelService {
     @Autowired
     LocationService locationService;
 
-    public List<Response> sendRequest(String locationCode,int adultCount, int childCount, Date startDate, Date endDate) {
-        List<Response> responseList = new ArrayList<>();
+    @Autowired
+    RateService rateService;
+
+    public List<searchResult> sendRequest(String locationCode, int adultCount, int childCount, Timestamp startDate, Timestamp endDate) {
+        List<searchResult> searchResultList = new ArrayList<>();
 
         for(Hotel hotel:availableHotelList(locationCode)){
-            Response response = new Response();
-            response.setHotelName(hotel.getHotelName());
-            response.setAvailableRoomsList(roomsService.availableRoomsForHotel(hotel));
-            responseList.add(response);
+            if(roomsService.availableRoomsForHotel(hotel).isEmpty())
+                continue;
+            for(Rooms rooms: roomsService.availableRoomsForHotel(hotel)){
+                if(rateService.getRate(startDate,rooms.getRoomsId()).isPresent()){
+                    searchResult searchResult = new searchResult();
+                    searchResult.setHotelName(hotel.getHotelName());
+                    searchResult.setRoomType(rooms.getRoomType().getRoomTypeName());
+                    searchResult.setAdultCount(rooms.getRoomType().getAdultCount());
+                    searchResult.setChildCount(rooms.getRoomType().getChildCount());
+                    searchResult.setAddress(hotel.getAddress());
+                    searchResult.setRate(rateService.getRate(startDate,rooms.getRoomsId()).get());
+                    searchResultList.add(searchResult);
+                }
+
+            }
+
+
+
         }
-        return responseList;
+
+        return searchResultList;
 
     }
     public List<Hotel> availableHotelList(String locationCode){

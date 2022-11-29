@@ -11,8 +11,10 @@ public class Rate {
     private int rateId;
     private int rate;
     @Column(name = "start_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date startDate;
     @Column (name = "end_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "room_id")

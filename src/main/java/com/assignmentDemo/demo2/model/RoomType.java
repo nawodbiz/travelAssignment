@@ -15,15 +15,20 @@ public class RoomType {
     @Column(name = "child_count")
     private int childCount;
 
+
+
     public RoomType() {
     }
 
-    public RoomType(int roomTypeId, String roomTypeName, int adultCount, int childCount) {
+    public RoomType(int roomTypeId, String roomTypeName, int adultCount, int childCount, int rate) {
         this.roomTypeId = roomTypeId;
         this.roomTypeName = roomTypeName;
         this.adultCount = adultCount;
         this.childCount = childCount;
+
     }
+
+
 
     public int getRoomTypeId() {
         return roomTypeId;

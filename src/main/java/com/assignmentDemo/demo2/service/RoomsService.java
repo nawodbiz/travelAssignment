@@ -10,6 +10,7 @@ import com.assignmentDemo.demo2.pojo.AddRooms;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -50,7 +51,7 @@ public class RoomsService {
         hotel.setHotelId(hotelId);
         return roomsRepo.findByHotel(hotel);
     }
-    public int getAvailableRoomsCount(int roomsId, Date firstDate, Date endDate){
+    public int getAvailableRoomsCount(int roomsId, Timestamp firstDate, Timestamp endDate){
         int initialRoomsCount = roomsRepo.findById(roomsId).get().getRoomsCount();
         int allocatedRoomsCount =0;
         for(int i: allocationRepo.findByAllocatedCount(firstDate,endDate,roomsId)){
@@ -62,7 +63,7 @@ public class RoomsService {
     public List<Rooms> availableRoomsForHotel(Hotel hotel){
         return roomsRepo.findByHotel(hotel);
     }
-    public List<Rooms> availableRooms(Hotel hotel, Date firstDate, Date endDate) {
+    public List<Rooms> availableRooms(Hotel hotel, Timestamp firstDate, Timestamp endDate) {
         List<Rooms> availableRoomsList = new ArrayList<>();
         List<Rooms> availableRoomsForHotel = availableRoomsForHotel(hotel);
         for (Rooms rooms : availableRoomsForHotel) {
