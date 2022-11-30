@@ -2,8 +2,10 @@ package com.assignmentDemo.demo2.service;
 
 import com.assignmentDemo.demo2.model.RoomType;
 import com.assignmentDemo.demo2.repository.RateRepo;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 
 import java.sql.Timestamp;
 import java.text.ParseException;

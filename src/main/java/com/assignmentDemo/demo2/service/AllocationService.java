@@ -4,6 +4,7 @@ import com.assignmentDemo.demo2.repository.AllocationRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -23,8 +24,8 @@ public class AllocationService {
 //        rooms.setRoomsId(roomsId);
 //        return allocationRepo.findByRooms(rooms);
 //    }
-    public List<Integer> getFreeRooms(int roomsId, Date firstDate, Date endDate) {
-        return allocationRepo.findByAllocatedCount(firstDate,endDate,roomsId);
-    }
+//    public List<Integer> getFreeRooms(int roomsId, Timestamp firstDate, Timestamp endDate) {
+//        return allocationRepo.findByAllocatedCount(firstDate,endDate,roomsId);
+//    }
 
 }

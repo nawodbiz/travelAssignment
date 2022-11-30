@@ -3,6 +3,7 @@ package com.assignmentDemo.demo2.pojo;
 public class searchResult {
     private String hotelName;
     private String roomType;
+    private int availableRoomCount;
     private int adultCount;
     private int childCount;
     private int rate;
@@ -12,9 +13,10 @@ public class searchResult {
     public searchResult() {
     }
 
-    public searchResult(String hotelName, String roomType, int adultCount, int childCount, int rate, String address) {
+    public searchResult(String hotelName, String roomType, int availableRoomCount, int adultCount, int childCount, int rate, String address) {
         this.hotelName = hotelName;
         this.roomType = roomType;
+        this.availableRoomCount = availableRoomCount;
         this.adultCount = adultCount;
         this.childCount = childCount;
         this.rate = rate;
@@ -23,6 +25,14 @@ public class searchResult {
 
     public String getHotelName() {
         return hotelName;
+    }
+
+    public int getAvailableRoomCount() {
+        return availableRoomCount;
+    }
+
+    public void setAvailableRoomCount(int availableRoomCount) {
+        this.availableRoomCount = availableRoomCount;
     }
 
     public void setHotelName(String hotelName) {

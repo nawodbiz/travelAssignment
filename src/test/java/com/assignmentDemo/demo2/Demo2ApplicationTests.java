@@ -31,36 +31,22 @@ class Demo2ApplicationTests {
 
 
 	@Test
-	void contextLoads() throws ParseException {
+	void contextLoads() {
 
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-		Date parsedDate = dateFormat.parse("2022-11-01 00:00:00");
-		Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
-
-
-
-		Integer rate = rateService.getRate(timestamp,1);
-		System.out.println(rate);
-
-
-
-
-
-//		List<Integer> rate = rateRepo.filterRate(new SimpleDateFormat("yyyy-MM-dd").parse("2022-10-30"),1);
-//		System.out.println(rate);
-
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//		Date parsedDate = dateFormat.parse("2023-01-05 00:00:00");
+//		Timestamp timestamp = new java.sql.Timestamp(parsedDate.getTime());
 //
-//		List<Rate> rateList = rateRepo.findAll();
-//		System.out.println(rateList);
+//		SimpleDateFormat dateFormat2 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+//		Date parsedDate2 = dateFormat.parse("2023-01-10 00:00:00");
+//		Timestamp timestamp2 = new java.sql.Timestamp(parsedDate2.getTime());
 //
-//		List<Allocation> alList = allocationRepo.findAll();
-//		System.out.println(alList);
+//		Integer rooms = roomsService.getAvailableRoomsCount(5,timestamp,timestamp2);
+//		System.out.println(rooms);
 
 
 
-//		List<searchResult> searchResultList = travelService.sendRequest("GAL",1,1,new Date(2022,10,10), new Date(2022,10,25));
-//		System.out.println(searchResultList);
+
 
 
 	}

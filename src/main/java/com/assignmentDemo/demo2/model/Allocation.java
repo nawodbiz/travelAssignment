@@ -12,8 +12,10 @@ public class Allocation {
     @Column(name = "allocation_count")
     private int allocationCount;
     @Column(name = "first_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date firstDate;
     @Column(name = "end_date")
+    @Temporal(TemporalType.TIMESTAMP)
     private Date endDate;
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "rooms_id")

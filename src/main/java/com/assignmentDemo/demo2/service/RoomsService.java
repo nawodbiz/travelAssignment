@@ -7,12 +7,13 @@ import com.assignmentDemo.demo2.repository.RoomsRepo;
 import com.assignmentDemo.demo2.model.Hotel;
 import com.assignmentDemo.demo2.model.Rooms;
 import com.assignmentDemo.demo2.pojo.AddRooms;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service
@@ -25,7 +26,7 @@ public class RoomsService {
     RoomTypeRepo roomTypeRepo;
     @Autowired
     AllocationRepo allocationRepo;
-    public int remainingRoomsCOunt;
+    public int remainingRoomsCount;
     public Rooms addRooms(AddRooms addRooms) {
 
         Rooms rooms = new Rooms();
@@ -53,12 +54,17 @@ public class RoomsService {
     }
     public int getAvailableRoomsCount(int roomsId, Timestamp firstDate, Timestamp endDate){
         int initialRoomsCount = roomsRepo.findById(roomsId).get().getRoomsCount();
-        int allocatedRoomsCount =0;
-        for(int i: allocationRepo.findByAllocatedCount(firstDate,endDate,roomsId)){
-            allocatedRoomsCount+=i;
+        Integer allocatedRoomsCount =0;
+//        for(Integer i: allocationRepo.getAllocatedCountByRoomsId(firstDate,endDate,roomsId)){
+//            allocatedRoomsCount+=i;
+//        }
+
+        List<Integer> temp = allocationRepo.getAllocatedCountByRoomsId(firstDate,endDate,roomsId);
+        if(!temp.isEmpty()) {
+            allocatedRoomsCount = temp.get(0);
         }
 
-        return remainingRoomsCOunt = initialRoomsCount-allocatedRoomsCount;
+        return remainingRoomsCount = initialRoomsCount-allocatedRoomsCount;
     }
     public List<Rooms> availableRoomsForHotel(Hotel hotel){
         return roomsRepo.findByHotel(hotel);
@@ -68,7 +74,7 @@ public class RoomsService {
         List<Rooms> availableRoomsForHotel = availableRoomsForHotel(hotel);
         for (Rooms rooms : availableRoomsForHotel) {
             if (getAvailableRoomsCount(rooms.getRoomsId(), firstDate, endDate) > 0) {
-                rooms.setRoomsCount(remainingRoomsCOunt);
+                rooms.setRoomsCount(remainingRoomsCount);
                 availableRoomsList.add(rooms);
             }
         }
