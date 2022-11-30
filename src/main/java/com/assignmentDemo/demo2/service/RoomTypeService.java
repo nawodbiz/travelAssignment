@@ -40,32 +40,6 @@ public class RoomTypeService {
         return roomTypeRepo.findAll();
     }
 
-    public String getRoomTypeName(int totalPax) {
-        if (totalPax == 1) {
-            return "Single";
-        } else if (totalPax == 2) {
-            return "Double";
-        } else if (totalPax == 3) {
-            return "Triple";
-        } else
-            return "Family";
-
-    }
-
-    public int getRoomRate(int totalPax) {
-        int roomRate;
-        if (totalPax == 1) {
-            return roomRate = 100;
-
-        } else if (totalPax == 2) {
-            return roomRate = 150;
-        } else if (totalPax == 3) {
-            return roomRate = 200;
-        } else
-            return roomRate = 300;
-
-    }
-
     public RoomType findProperRoomType(int adultCount, int childCount) {
         RoomType properRoomType = new RoomType();
         for (RoomType roomType : roomTypeRepo.findAll()) {
@@ -74,11 +48,6 @@ public class RoomTypeService {
                 properRoomType = roomType;
                 return properRoomType;
             }
-//            else{
-//                properRoomType = roomType;
-//                return properRoomType;
-//            }
-
         }
         return properRoomType;
     }

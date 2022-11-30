@@ -1,5 +1,6 @@
 package com.assignmentDemo.demo2.service;
 
+import com.assignmentDemo.demo2.model.RoomType;
 import com.assignmentDemo.demo2.repository.AllocationRepo;
 import com.assignmentDemo.demo2.repository.HotelRepo;
 import com.assignmentDemo.demo2.repository.RoomTypeRepo;
@@ -26,6 +27,9 @@ public class RoomsService {
     RoomTypeRepo roomTypeRepo;
     @Autowired
     AllocationRepo allocationRepo;
+
+    @Autowired
+    RoomTypeService roomTypeService;
     public int remainingRoomsCount;
     public Rooms addRooms(AddRooms addRooms) {
 
@@ -47,11 +51,7 @@ public class RoomsService {
     public List<Rooms> getAllRooms(){
         return roomsRepo.findAll();
     }
-    public List<Rooms> findRoomsByHotelKey(int hotelId){
-        Hotel hotel = new Hotel();
-        hotel.setHotelId(hotelId);
-        return roomsRepo.findByHotel(hotel);
-    }
+
     public int getAvailableRoomsCount(int roomsId, Timestamp firstDate, Timestamp endDate){
         int initialRoomsCount = roomsRepo.findById(roomsId).get().getRoomsCount();
         Integer allocatedRoomsCount =0;
@@ -66,37 +66,37 @@ public class RoomsService {
 
         return remainingRoomsCount = initialRoomsCount-allocatedRoomsCount;
     }
-    public List<Rooms> availableRoomsForHotel(Hotel hotel){
-        return roomsRepo.findByHotel(hotel);
+    public List<Rooms> availableRoomsForHotel(Hotel hotel , int roomTypeId){
+         return roomsRepo.findByHotel(hotel, roomTypeId);
     }
-    public List<Rooms> availableRooms(Hotel hotel, Timestamp firstDate, Timestamp endDate) {
+    public List<Rooms> availableRooms(Hotel hotel, Timestamp firstDate, Timestamp endDate, int adultCount, int childCount) {
+        List<Integer> matchingRoomsIds = matchingRoomTypes(adultCount,childCount);
         List<Rooms> availableRoomsList = new ArrayList<>();
-        List<Rooms> availableRoomsForHotel = availableRoomsForHotel(hotel);
-        for (Rooms rooms : availableRoomsForHotel) {
-            if (getAvailableRoomsCount(rooms.getRoomsId(), firstDate, endDate) > 0) {
-                rooms.setRoomsCount(remainingRoomsCount);
-                availableRoomsList.add(rooms);
+        for(Integer i : matchingRoomsIds){
+
+
+            List<Rooms> availableRoomsForHotel = availableRoomsForHotel(hotel,i);
+            for (Rooms rooms : availableRoomsForHotel) {
+                if (getAvailableRoomsCount(rooms.getRoomsId(), firstDate, endDate) > 0) {
+                    rooms.setRoomsCount(remainingRoomsCount);
+                    availableRoomsList.add(rooms);
+                }
             }
+
         }
+
         return availableRoomsList;
     }
 
 
 
-//    public List<Rooms> getAvailableRoomsForLocation(List<Hotel> hotelListForLocation, Date firstDate, Date endDate){
-//
-//        List<Rooms> availableRooms = new ArrayList<>();
-//        int id;
-//
-//        for(Rooms room: availableRoomsForHotel(hotelId)){
-//            id = availableRooms(room.getRoomsId(),firstDate,endDate);
-//            getRoomsById(id);
-//        }
-//        return availableRooms;
-//        for(Hotel hotel: hotelListForLocation){
-//
-//        }
-
+    public List<Integer> matchingRoomTypes(int adultCount, int childCount){
+        List<Integer> roomTypeIds = new ArrayList<>();
+        for(RoomType roomType: roomTypeService.findRoomType(adultCount,childCount)){
+            roomTypeIds.add(roomType.getRoomTypeId());
+        }
+        return roomTypeIds;
+    }
 
 
     }

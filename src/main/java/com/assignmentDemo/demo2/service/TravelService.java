@@ -1,6 +1,7 @@
 package com.assignmentDemo.demo2.service;
 
 import com.assignmentDemo.demo2.model.Hotel;
+import com.assignmentDemo.demo2.model.RoomType;
 import com.assignmentDemo.demo2.model.Rooms;
 import com.assignmentDemo.demo2.pojo.searchResult;
 
@@ -29,13 +30,14 @@ public class TravelService {
     @Autowired
     RateService rateService;
 
+    @Autowired
+    RoomTypeService roomTypeService;
+
     public List<searchResult> sendRequest(String locationCode, int adultCount, int childCount, Timestamp startDate, Timestamp endDate) {
         List<searchResult> searchResultList = new ArrayList<>();
 
         for(Hotel hotel:availableHotelList(locationCode)){
-            if(roomsService.availableRoomsForHotel(hotel).isEmpty())
-                continue;
-            for(Rooms rooms: roomsService.availableRooms(hotel,startDate,endDate)){
+            for(Rooms rooms: roomsService.availableRooms(hotel,startDate,endDate, adultCount, childCount)){
                 if(rateService.getRate(startDate,rooms.getRoomsId()).isPresent()){
                     searchResult searchResult = new searchResult();
                     searchResult.setHotelName(hotel.getHotelName());
@@ -49,9 +51,6 @@ public class TravelService {
                 }
 
             }
-
-
-
         }
 
         return searchResultList.stream().sorted(new Comparator<searchResult>() {
@@ -67,26 +66,7 @@ public class TravelService {
         return locationHotelList;
     }
 
-//    public List<Response> getSampleResponse (String locationCode, Date startDate, Date endDate ){
-//        List<Response> hotelListResponse = new ArrayList<>();
-//        for(Hotel hotel: hotelService.getHotelsByLocationCode(locationCode)){
-//            Response response = new Response();
-//            response.setHotelName(hotel.getHotelName());
-//            response.setAvailableRoomsList(roomsService.availableRooms(hotel,startDate,endDate));
-//            hotelListResponse.add(response);
-//        }
-//        return hotelListResponse;
-//
-//    }
-//    public List<Response> sample (String locationCode){
-//        List<Response> responseList = new ArrayList<>();
-//        for(Hotel hotel: hotelService.getHotelsByLocationCode(locationCode)){
-//            Response response = new Response();
-//            response.setHotelName(hotel.getHotelName());
-//            responseList.add(response);
-//        }
-//        return responseList;
-//    }
+
 
 
 }

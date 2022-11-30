@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.naming.directory.SearchResult;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 @RestController
 @RequestMapping("/travel")
@@ -29,7 +31,7 @@ public class TravelControl {
 
     @GetMapping(value = "/sendRequest")
     public SearchResponse getResponse(@RequestParam(value = "locationCode")@NotNull String locationCode,
-                                      @RequestParam(value = "adultCount")  @NotNull @Min(1) int adultCount,
+                                      @RequestParam(value = "adultCount")  @NotNull int adultCount,
                                       @RequestParam(value = "childCount") @NotNull@Min(0) int childCount,
                                       @RequestParam(value = "startDate") @NotNull Timestamp startDate,
                                       @RequestParam(value = "endDate") @NotNull Timestamp endDate){
@@ -38,10 +40,10 @@ public class TravelControl {
         if(locationService.findByLocationCode(locationCode)==null){
             return searchResponse.setErrorMessage("Location Code Not Matching").setMetaData(ResponseMetadata.create().setStatus("failed"));
         }
-        if(adultCount<1)
+        if(adultCount<=0)
             return searchResponse.setErrorMessage("invalid adult count").setMetaData(ResponseMetadata.create().setStatus("failed"));
-        if(childCount<0)
-            return searchResponse.setErrorMessage("invalid child count").setMetaData(ResponseMetadata.create().setStatus("failed"));
+//        if(childCount<0)
+//            return searchResponse.setErrorMessage("invalid child count").setMetaData(ResponseMetadata.create().setStatus("failed"));
 
         SearchResponse tempDateResponse = checkDateWithCurrentDate(startDate,"start Date");
 
@@ -54,7 +56,10 @@ public class TravelControl {
         if(tempDateResponse!=null)
             return tempDateResponse;
         searchResponse.setMetaData(new ResponseMetadata().setStatus("success"));
-        searchResponse.setData(travelService.sendRequest(locationCode,adultCount,childCount,startDate,endDate));
+        var searchResultList = travelService.sendRequest(locationCode,adultCount,childCount,startDate,endDate);
+        if(searchResultList.isEmpty())
+            return searchResponse.setErrorMessage("no result found").setMetaData(ResponseMetadata.create().setStatus("success"));
+        searchResponse.setData(searchResultList);
         return searchResponse;
     }
 

@@ -12,6 +12,13 @@ import java.util.List;
 
 @Repository
 public interface RoomsRepo extends JpaRepository<Rooms,Integer> {
-    List<Rooms> findByHotel(Hotel hotel);
+    @Query("SELECT u FROM Rooms u WHERE u.hotel = :hotel AND u.roomType.roomTypeId = :roomTypeId")
+    List<Rooms> findByHotel(@Param("hotel") Hotel hotel, @Param("roomTypeId") int roomTypeId);
+
+//    @Query ("SELECT u FROM RoomType u WHERE u.adultCount+u.childCount >= :adultCount+:childCount AND u.adultCount>=:adultCount")
+//    List<RoomType> findByTotalPax(
+//            @Param("adultCount") int rAdultCount,
+//            @Param("childCount") int rChildCountSS
+//    );
 
 }

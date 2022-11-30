@@ -18,10 +18,7 @@ public class RoomsController {
         return roomsService.addRooms(addRooms);
     }
 
-    @GetMapping("/getByHotel/{hotelId}")
-    public List<Rooms> roomsList (@PathVariable int hotelId){
-        return roomsService.findRoomsByHotelKey(hotelId);
-    }
+
     @GetMapping("/getAll")
     public List<Rooms> getAllRooms(){
         System.out.println("here");
