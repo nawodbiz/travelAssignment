@@ -14,18 +14,6 @@ public class AllocationService {
     AllocationRepo allocationRepo;
 
 
-//    public Boolean isAvailableForOneDay(Date date) {
-//        return allocationRepo.findByForOneDay(date);
-//
-//    }
 
-//    public List<Allocation> getFreeRooms(int roomsId) {
-//        Rooms rooms = new Rooms();
-//        rooms.setRoomsId(roomsId);
-//        return allocationRepo.findByRooms(rooms);
-//    }
-//    public List<Integer> getFreeRooms(int roomsId, Timestamp firstDate, Timestamp endDate) {
-//        return allocationRepo.findByAllocatedCount(firstDate,endDate,roomsId);
-//    }
 
 }

@@ -1,23 +1,16 @@
 package com.assignmentDemo.demo2.controller;
-
 import com.assignmentDemo.demo2.pojo.ResponseMetadata;
 import com.assignmentDemo.demo2.pojo.SearchResponse;
 import com.assignmentDemo.demo2.service.LocationService;
 import com.assignmentDemo.demo2.service.TravelService;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-
-import javax.naming.directory.SearchResult;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
-
 @RestController
 @RequestMapping("/travel")
 @Validated
@@ -28,7 +21,6 @@ public class TravelControl {
     private static final String FAILED_STATUS = "failed";
     @Autowired
     TravelService travelService;
-
     @GetMapping(value = "/sendRequest")
     public SearchResponse getResponse(@RequestParam(value = "locationCode")@NotNull String locationCode,
                                       @RequestParam(value = "adultCount")  @NotNull int adultCount,
@@ -42,11 +34,7 @@ public class TravelControl {
         }
         if(adultCount<=0)
             return searchResponse.setErrorMessage("invalid adult count").setMetaData(ResponseMetadata.create().setStatus("failed"));
-//        if(childCount<0)
-//            return searchResponse.setErrorMessage("invalid child count").setMetaData(ResponseMetadata.create().setStatus("failed"));
-
         SearchResponse tempDateResponse = checkDateWithCurrentDate(startDate,"start Date");
-
         if(tempDateResponse!=null)
             return tempDateResponse;
         tempDateResponse = checkDateWithCurrentDate(endDate,"end date");
@@ -61,8 +49,8 @@ public class TravelControl {
             return searchResponse.setErrorMessage("no result found").setMetaData(ResponseMetadata.create().setStatus("success"));
         searchResponse.setData(searchResultList);
         return searchResponse;
-    }
 
+    }
     private SearchResponse checkDateWithCurrentDate(Timestamp dateToCheck, String dateName ){
         String currentDate = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(new Date());
         if ( Timestamp.valueOf(currentDate).compareTo(dateToCheck)>0){
@@ -82,34 +70,4 @@ public class TravelControl {
         }
         return null;
     }
-
-//    @GetMapping("/search")
-//    public ResponseEntity
-
-//    @PostMapping("/sample")
-//    public void getDate(@RequestParam(value = "date") Timestamp time){
-//
-//        System.out.println("hit");
-//    }
-
-
-
-//    @GetMapping("/sendRequest")
-//    public List<Response> getResponse(){
-//        System.out.println("got");
-//        return travelService.sendRequest("GAL",1,1,new Date(2022,10,10),new Date(2022,10,25));
-//    }
-
-
-
-//    public List<Response> getResponse(@RequestParam(value = "locationCode") String locationCode,
-//                                      @RequestParam(value = "adultCount") int adultCount,
-//                                      @RequestParam(value = "childCount") int childCount,
-//                                      @RequestParam(value = "startDate") Date startDate,
-//                                      @RequestParam(value = "endDate") Date endDate){
-//        return travelService.sendRequest(locationCode,adultCount,childCount,startDate,endDate);
-//    }
-
-
-
 }
